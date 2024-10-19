@@ -17,5 +17,14 @@ public class LabQueueTest {
         for (int i : sourceElementsArray) {
             Assertions.assertEquals(i, queue.pop());
         }
+
+        RuntimeException thrown = Assertions.assertThrows(
+                RuntimeException.class,
+                () -> queue.pop(),
+                "Expected queue.pop() to throw, but it didn't"
+        );
+
+        Assertions.assertTrue(thrown.getMessage().contains("no elements in queue"));
+
     }
 }
