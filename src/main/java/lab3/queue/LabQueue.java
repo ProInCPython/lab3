@@ -2,30 +2,31 @@ package lab3.queue;
 
 public class LabQueue {
 
-    private QueueElement nextQueueElement;
+    private QueueElement firstQueueElement;
     private QueueElement lastQueueElement;
 
     public void push(int el) {
         QueueElement newElement = new QueueElement(el);
 
-        if (nextQueueElement == null) {
-            this.nextQueueElement = newElement;
-            this.lastQueueElement = newElement;
+        if (firstQueueElement == null) {
+            firstQueueElement = newElement;
+            lastQueueElement = newElement;
         } else {
-            QueueElement tmp = this.lastQueueElement;
-            this.lastQueueElement = newElement;
-            newElement.setNext(tmp);
+            lastQueueElement.setNext(newElement);
+            lastQueueElement = newElement;
         }
     }
 
     public int pop() {
-        if (this.nextQueueElement == null) {
-            throw new RuntimeException();
+        if (firstQueueElement == null) {
+            throw new RuntimeException("no elements in queue");
         } else {
-            int retVal = this.nextQueueElement.getValue();
+            int retVal = firstQueueElement.getValue();
+            firstQueueElement = firstQueueElement.getNext();
 
-            this.nextQueueElement = this.nextQueueElement.getNext();
-
+            if (firstQueueElement == null) {
+                lastQueueElement = null;
+            }
             return retVal;
         }
     }
